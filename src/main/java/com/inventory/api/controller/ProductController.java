@@ -61,7 +61,7 @@ public class ProductController {
         Product product = productService.listProduct(id);
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
-
+    /*Pour ajouter plusieurs products dans une seule requete*/
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_REGISTER_PRODUCT') and hasAuthority('SCOPE_write')")
     public List<Product> add(@RequestBody List<Product> product){
