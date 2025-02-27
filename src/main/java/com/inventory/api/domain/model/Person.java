@@ -9,14 +9,18 @@ import java.util.Objects;
 
 
 @Entity
+@Table(name = "person")
 public class Person {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String mail;
     private String password;
+    //private String registration;
+    //private String permissionType;
 
     @ManyToMany(fetch = FetchType.EAGER)//toda vez que eu buscar os usuarios, ja traz as permissoes dele.
     @JoinTable(name = "person_permission", joinColumns = @JoinColumn(name = "id_person")

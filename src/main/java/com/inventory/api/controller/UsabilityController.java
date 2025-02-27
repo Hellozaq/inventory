@@ -1,12 +1,14 @@
 package com.inventory.api.controller;
 
+import com.inventory.api.domain.model.Model;
 import com.inventory.api.domain.model.Usability;
 import com.inventory.api.domain.repository.UsabilityRepository;
+import com.inventory.api.domain.service.UsabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Id;
 import java.util.List;
@@ -18,10 +20,28 @@ public class UsabilityController {
     @Autowired
     private UsabilityRepository repository;
 
+    @Autowired
+    private UsabilityService usabilityService;
+
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public List<Usability> list(){
         return repository.findAll();
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_REGISTER_USABILITY') and hasAuthority('SCOPE_write')")
+    public ResponseEntity<Usability> addUsability(@RequestBody Usability usability){
+
+        Usability usabilitySave = usabilityService.addUsability(usability);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(usabilitySave);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_DELETE_USABILITY') and hasAuthority('SCOPE_write')")
+    public ResponseEntity<Usability> deleteUsability(@PathVariable Long id){
+        usabilityService.removeUsability(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

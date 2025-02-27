@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PersonService {
@@ -27,18 +24,21 @@ public class PersonService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Person userAdd(UserDTO userDTO) {
+    public Person userAdd(UserDTO userDTO){
         Person person = new Person();
-        person.setId(userDTO.getId());
         person.setName(userDTO.getName());
         person.setMail(userDTO.getMail());
-        person.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Criptografa a senha
+        person.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-        // Buscar e associar permissões
-        List<Permission> permissoes = new ArrayList<>(permissionRepository.findAllById(userDTO.getPermissionsIds()));
-        person.setPermission(permissoes);
-
+        List<Permission> permissions = new ArrayList<>(permissionRepository.findAllById(userDTO.getPermissionsIds()));
+        person.setPermission(permissions);
 
         return personRepository.save(person);
     }
+
+    public void removeUser(Long id) {
+        Optional<Person> person = personRepository.findById(id);
+        personRepository.delete(person.get());
+    }
+
 }
