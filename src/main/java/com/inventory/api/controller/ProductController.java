@@ -4,7 +4,7 @@ import com.inventory.api.domain.model.Establishment;
 import com.inventory.api.domain.model.Product;
 import com.inventory.api.domain.repository.EstablishementRepository;
 import com.inventory.api.domain.repository.ProductRepository;
-import com.inventory.api.domain.repository.filter.ProductFilter;
+
 import com.inventory.api.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,6 +53,17 @@ public class ProductController {
         List<Product> productPage =  products.getContent();
         Page<Product> pageImpl = new PageImpl<>(productPage, pageable, products.getTotalElements());
         return pageImpl;
+    }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasAuthority('ROLE_SEARCH_PRODUCT') and hasAuthority('SCOPE_read')")
+    public List<Product> searchProducts(
+            @RequestParam(required = false) String serialNumber,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String professionalName,
+            @RequestParam(required = false) String modelName
+    ) {
+        return productService.searchProducts(serialNumber, name, professionalName, modelName);
     }
 
     @GetMapping("/{id}")

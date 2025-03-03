@@ -35,10 +35,10 @@ public class OwnerController {
 
     @GetMapping(params = {"page", "size"})
     @PreAuthorize("hasAuthority('ROLE_SEARCH_OWNER') and hasAuthority('SCOPE_read')")
-    public Page<Owner> listPersonsPage(Pageable pageable){
-        Page<Owner> persons =  repository.findAll(pageable);
-        List<Owner> personsPage =  persons.getContent();
-        Page<Owner> pageImpl = new PageImpl<>(personsPage, pageable, persons.getTotalElements());
+    public Page<Owner> listOwnerPage(Pageable pageable){
+        Page<Owner> owners =  repository.findAll(pageable);
+        List<Owner> ownersPage =  owners.getContent();
+        Page<Owner> pageImpl = new PageImpl<>(ownersPage, pageable, owners.getTotalElements());
         return pageImpl;
     }
 

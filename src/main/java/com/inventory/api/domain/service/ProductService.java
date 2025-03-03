@@ -1,6 +1,8 @@
 package com.inventory.api.domain.service;
 
+import com.inventory.api.domain.model.Model;
 import com.inventory.api.domain.model.Product;
+import com.inventory.api.domain.model.Professional;
 import com.inventory.api.domain.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,10 @@ public class ProductService {
     public Product listProduct(Long id){
         Optional<Product> product = productRepository.findById(id);
         return product.get();
+    }
+
+    public List<Product> searchProducts(String serialNumber, String name, String professionalName, String modelName) {
+        return productRepository.searchProducts(serialNumber, name, professionalName, modelName);
     }
 
     public Product addProduct(Product product) {

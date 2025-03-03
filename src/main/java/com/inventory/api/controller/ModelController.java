@@ -5,6 +5,9 @@ import com.inventory.api.domain.model.Owner;
 import com.inventory.api.domain.repository.ModelRepositoy;
 import com.inventory.api.domain.service.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +28,15 @@ public class ModelController {
     @GetMapping
     public List<Model> list(){
         return modelRepositoy.findAll();
+    }
+
+    @GetMapping(params = {"page", "size"})
+    @PreAuthorize("hasAuthority('ROLE_SEARCH_MODEL') and hasAuthority('SCOPE_read')")
+    public Page<Model> listModelPage(Pageable pageable){
+        Page<Model> models =  modelRepositoy.findAll(pageable);
+        List<Model> modelsPage =  models.getContent();
+        Page<Model> pageImpl = new PageImpl<>(modelsPage, pageable, models.getTotalElements());
+        return pageImpl;
     }
 
     @PostMapping
