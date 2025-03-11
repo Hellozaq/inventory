@@ -5,6 +5,7 @@ import com.inventory.api.domain.model.Product;
 import com.inventory.api.domain.repository.EstablishementRepository;
 import com.inventory.api.domain.repository.ProductRepository;
 
+import com.inventory.api.domain.repository.product.ProductFilter;
 import com.inventory.api.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,7 +46,6 @@ public class ProductController {
         return products;
     }
 
-
     @GetMapping(params = {"page", "size"})
     @PreAuthorize("hasAuthority('ROLE_SEARCH_PRODUCT') and hasAuthority('SCOPE_read')")
     public Page<Product> listProductsPage(Pageable pageable){
@@ -57,13 +57,8 @@ public class ProductController {
 
     @GetMapping("/search")
     @PreAuthorize("hasAuthority('ROLE_SEARCH_PRODUCT') and hasAuthority('SCOPE_read')")
-    public List<Product> searchProducts(
-            @RequestParam(required = false) String serialNumber,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String professionalName,
-            @RequestParam(required = false) String modelName
-    ) {
-        return productService.searchProducts(serialNumber, name, professionalName, modelName);
+    public Page<Product> searchProducts(ProductFilter productFilter, Pageable pageable) {
+        return productService.searchProducts(productFilter, pageable);
     }
 
     @GetMapping("/{id}")

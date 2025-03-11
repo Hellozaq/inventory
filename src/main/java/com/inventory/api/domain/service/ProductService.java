@@ -4,9 +4,15 @@ import com.inventory.api.domain.model.Model;
 import com.inventory.api.domain.model.Product;
 import com.inventory.api.domain.model.Professional;
 import com.inventory.api.domain.repository.ProductRepository;
+import com.inventory.api.domain.repository.product.ProductFilter;
+import com.inventory.api.domain.repository.product.ProductRepositoryCustom;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -17,13 +23,14 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
+
     public Product listProduct(Long id){
         Optional<Product> product = productRepository.findById(id);
         return product.get();
     }
 
-    public List<Product> searchProducts(String serialNumber, String name, String professionalName, String modelName) {
-        return productRepository.searchProducts(serialNumber, name, professionalName, modelName);
+    public Page<Product> searchProducts(ProductFilter filter, Pageable pageable) {
+        return productRepository.searchProducts(filter, pageable);
     }
 
     public Product addProduct(Product product) {
