@@ -1,17 +1,21 @@
 package com.inventory.api.controller;
 
-import com.inventory.api.domain.model.Establishment;
+
 import com.inventory.api.domain.model.Product;
-import com.inventory.api.domain.repository.EstablishementRepository;
+
 import com.inventory.api.domain.repository.ProductRepository;
 
 import com.inventory.api.domain.repository.product.ProductFilter;
+
+import com.inventory.api.domain.service.PdfService;
 import com.inventory.api.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,21 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    private PdfService pdfService;
+
+    @GetMapping("/pdf")
+    @PreAuthorize("hasAuthority('ROLE_SEARCH_PRODUCT') and hasAuthority('SCOPE_read')")
+    public ResponseEntity<byte[]> exportProductsToPdf() {
+        List<Product> products = repository.findAll();
+        byte[] pdf = pdfService.generateProductPdf(products);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=products.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
 
     @GetMapping(params = {"page", "size", "establishment" })
     @PreAuthorize("isAuthenticated()")

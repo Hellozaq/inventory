@@ -21,7 +21,9 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-
+import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @SuppressWarnings("deprecation")
@@ -50,7 +52,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .secret("$2a$10$1k9Q64VdGbxz1BzhkGXmRuEoc9ZvZQgqR3pvXHsuqDFJvmmI/j8Zu")
                 .scopes("read", "write")
                 .authorizedGrantTypes("password", "refresh_token")
-                .accessTokenValiditySeconds(5)
+                .accessTokenValiditySeconds(30)
                 .refreshTokenValiditySeconds(3600 * 24);
     }
 
@@ -85,4 +87,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // Customização do token para mostrar o nome do usuário logado na tela
         return new CustomTokenEnhancer();
     }
+
+    /*tirar depois - apenas test*/
+    @Bean
+    public StrictHttpFirewall strictHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowUrlEncodedPercent(true); // Permitir o caractere %0A
+        firewall.setAllowUrlEncodedSlash(true);  // Permitir a barra "/"
+        return firewall;
+    }
+
+
 }

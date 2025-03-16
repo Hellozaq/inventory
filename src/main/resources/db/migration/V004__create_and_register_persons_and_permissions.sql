@@ -65,6 +65,8 @@ INSERT INTO permission (id, description) values (30, 'ROLE_DELETE_MODEL');
 INSERT INTO permission (id, description) values (31, 'ROLE_SEARCH_MODEL');
 INSERT INTO permission (id, description) values (32, 'ROLE_UPDATE_MODEL');
 
+INSERT INTO permission (id, description) values (33, 'ROLE_EXPORT_PDF');
+
 
 -- admin
 INSERT INTO person_permission (id_person, id_permission) values (1, 1);
@@ -100,7 +102,7 @@ INSERT INTO person_permission (id_person, id_permission) values (1, 29);
 INSERT INTO person_permission (id_person, id_permission) values (1, 30);
 INSERT INTO person_permission (id_person, id_permission) values (1, 31);
 INSERT INTO person_permission (id_person, id_permission) values (1, 32);
-
+INSERT INTO person_permission (id_person, id_permission) values (1, 33);
 
 
 
