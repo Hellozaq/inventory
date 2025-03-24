@@ -4,6 +4,7 @@ import com.inventory.api.domain.model.Model;
 import com.inventory.api.domain.model.Owner;
 import com.inventory.api.domain.repository.ModelRepositoy;
 import com.inventory.api.domain.repository.ProductRepository;
+import com.inventory.api.handler.OwnerExceptionInUse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +26,9 @@ public class ModelService {
     public void removeModel(Long id) {
         Optional<Model> model = modelRepositoy.findById(id);
         if (productRepository.existsByModel(model.get())) {
-            throw new RuntimeException("Não é possível excluir. Existem produtos associados a este tipo.");
-        }else{
-            modelRepositoy.delete(model.get());
+            throw new OwnerExceptionInUse("Il n'est pas possible de supprimer le modèle car il est lié à un ou plusieurs produits.");
         }
+        modelRepositoy.delete(model.get());
 
     }
 }

@@ -12,4 +12,19 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleOwnerExceptionInUse(OwnerExceptionInUse ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(ModelExceptionInUse.class)
+    public ResponseEntity<String> handleOwnerExceptionInUse(ModelExceptionInUse ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UsabilityExceptionInUse.class)
+    public ResponseEntity<String> handleOwnerExceptionInUse(UsabilityExceptionInUse ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ProfessionalExceptionInUse.class)
+    public ResponseEntity<String> handleOwnerExceptionInUse(ProfessionalExceptionInUse ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }

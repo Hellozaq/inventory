@@ -22,19 +22,21 @@ public class PdfService {
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            document.add(new Paragraph("Lista de Produtos"));
+            document.add(new Paragraph("Liste de Produits"));
 
             // Criar tabela
-            float[] columnWidths = {100f, 200f, 150f}; // Ajuste conforme necessário
+            float[] columnWidths = {50f, 150f, 150f, 150f}; // Ajuste conforme necessário
             Table table = new Table(columnWidths);
             table.addCell("ID");
             table.addCell("Nome");
             table.addCell("NumeroSerie");
+            table.addCell("Attribué à");
 
             for (Product product : products) {
                 table.addCell(product.getId().toString());
                 table.addCell(product.getName());
                 table.addCell(product.getSerialNumber().toString());
+                table.addCell(product.getProfessional().getName().toString());
             }
 
             document.add(table);
