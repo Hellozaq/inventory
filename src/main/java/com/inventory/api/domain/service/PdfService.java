@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class PdfService {
+    private Integer index = 0;
 
     public byte[] generateProductPdf(List<Product> products) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -27,13 +28,14 @@ public class PdfService {
             // Criar tabela
             float[] columnWidths = {50f, 150f, 150f, 150f}; // Ajuste conforme necessário
             Table table = new Table(columnWidths);
-            table.addCell("ID");
-            table.addCell("Nome");
-            table.addCell("NumeroSerie");
+            table.addCell("");
+            table.addCell("Nom");
+            table.addCell("Numero de série");
             table.addCell("Attribué à");
 
             for (Product product : products) {
-                table.addCell(product.getId().toString());
+                this.index++;
+                table.addCell(this.index.toString());
                 table.addCell(product.getName());
                 table.addCell(product.getSerialNumber().toString());
                 table.addCell(product.getProfessional().getName().toString());

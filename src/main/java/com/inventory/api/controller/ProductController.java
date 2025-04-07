@@ -38,11 +38,11 @@ public class ProductController {
 
     @GetMapping("/pdf")
     @PreAuthorize("hasAuthority('ROLE_SEARCH_PRODUCT') and hasAuthority('SCOPE_read')")
-    public ResponseEntity<byte[]> exportProductsToPdf(@RequestParam(required = false) Long establishment) {
+    public ResponseEntity<byte[]> exportProductsToPdf(@RequestParam(required = false) Long establishmentId) {
        byte[] pdf;
         List<Product> products;
-        if(establishment != null){
-            products = repository.findByEstablishmentId(establishment);
+        if(establishmentId != null || establishmentId != 0){
+            products = repository.findByEstablishmentId(establishmentId);
         }else{
             products = repository.findAll();
         }
