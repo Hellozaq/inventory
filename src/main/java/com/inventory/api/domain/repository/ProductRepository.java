@@ -13,6 +13,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
     Page<Product> findByEstablishmentId(Long establishmentId, Pageable pageable);
+    List<Product> findByEstablishmentId(Long establishmentId);
 
     List<Product> findByModelContaining(Model model);
 

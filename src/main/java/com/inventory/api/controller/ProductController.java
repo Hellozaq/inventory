@@ -38,9 +38,16 @@ public class ProductController {
 
     @GetMapping("/pdf")
     @PreAuthorize("hasAuthority('ROLE_SEARCH_PRODUCT') and hasAuthority('SCOPE_read')")
-    public ResponseEntity<byte[]> exportProductsToPdf() {
-        List<Product> products = repository.findAll();
-        byte[] pdf = pdfService.generateProductPdf(products);
+    public ResponseEntity<byte[]> exportProductsToPdf(@RequestParam(required = false) Long establishment) {
+       byte[] pdf;
+        List<Product> products;
+        if(establishment != null){
+            products = repository.findByEstablishmentId(establishment);
+        }else{
+            products = repository.findAll();
+        }
+
+        pdf = pdfService.generateProductPdf(products);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=products.pdf")
