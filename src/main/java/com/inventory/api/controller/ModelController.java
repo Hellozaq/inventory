@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://3.95.208.110")
 @RestController
 @RequestMapping("/models")
 public class ModelController {

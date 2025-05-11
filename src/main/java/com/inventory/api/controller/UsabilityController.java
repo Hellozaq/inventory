@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.Id;
 import java.util.List;
 
+@CrossOrigin(origins = "http://3.95.208.110")
 @RestController
 @RequestMapping("/usabilities")
 public class UsabilityController {

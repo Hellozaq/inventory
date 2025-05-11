@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 4200)
+@CrossOrigin(origins = "http://3.95.208.110")
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -41,7 +41,7 @@ public class ProductController {
     public ResponseEntity<byte[]> exportProductsToPdf(@RequestParam(required = false) Long establishmentId) {
        byte[] pdf;
         List<Product> products;
-        if(establishmentId != null || establishmentId != 0){
+        if(establishmentId != null){
             products = repository.findByEstablishmentId(establishmentId);
         }else{
             products = repository.findAll();

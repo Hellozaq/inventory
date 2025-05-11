@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 4200)
+@CrossOrigin(origins = "http://3.95.208.110")
 @RestController
 @RequestMapping("/professionals")
 public class ProfessionalController {

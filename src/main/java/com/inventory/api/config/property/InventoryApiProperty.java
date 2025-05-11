@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("algamoney")
 @Component
 public class InventoryApiProperty {
-    private String originPermitida = "http://localhost:4200";
+    private String originPermitida = "http://3.95.208.110";
 
     private final Seguranca seguranca = new Seguranca();
 

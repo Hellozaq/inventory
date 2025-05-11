@@ -5,5 +5,5 @@ CREATE TABLE owner (
 
 INSERT INTO  owner (name) values ('Services Informatiques');
 INSERT INTO  owner (name) values ('Services Educatifs');
-INSERT INTO  owner (name) values ('047 - École du Parchemin côté Couvent');
-INSERT INTO  owner (name) values ('048 - École du Parchemin côté Collège');
+INSERT INTO  owner (name) values ('071 - École Élémentaire Victor Hugo');
+INSERT INTO  owner (name) values ('078 - Collège Simone de Beauvoir');
