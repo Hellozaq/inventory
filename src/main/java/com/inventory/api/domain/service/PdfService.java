@@ -6,8 +6,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-
-import com.itextpdf.layout.property.UnitValue;
+import com.itextpdf.layout.properties.UnitValue;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -27,7 +26,7 @@ public class PdfService {
 
             // Criar tabela
             float[] columnWidths = {50f, 150f, 150f, 150f}; // Ajuste conforme necessário
-            Table table = new Table(columnWidths);
+            Table table = new Table(UnitValue.createPercentArray(columnWidths));
             table.setWidth(UnitValue.createPercentValue(100));
             table.addCell("");
             table.addCell("Nom");
@@ -36,7 +35,6 @@ public class PdfService {
 
             int index = 0;
             for (Product product : products) {
-
                 table.addCell(String.valueOf(index++));
                 table.addCell(product.getName() != null ? product.getName().toString() : "");
                 table.addCell(product.getSerialNumber().toString());
